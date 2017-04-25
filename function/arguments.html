@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>arguments 对象</title>
+</head>
+<body>
+<script>
+    //JavaScript 中每个函数内都能访问一个特别变量 arguments。这个变量维护着所有传递到这个函数中的参数列表。
+    //arguments 变量不是一个数组（Array）。 尽管在语法上它有数组相关的属性 length，但它不从 Array.prototype 继承，实际上它是一个对象（Object）。
+    //因此，无法对 arguments 变量使用标准的数组方法，比如 push, pop 或者 slice。
+    // 虽然使用 for 循环遍历也是可以的，但是为了更好的使用数组方法，最好把它转化为一个真正的数组。
+
+
+    //一、arguments 转化为数组
+    //Array.prototype.slice.call(arguments);
+    //这个转化比较慢，在性能不好的代码中不推荐这种做法。
+    function sum(a,b) {
+        console.log(arguments);//[1, 2]
+        //检验是否是数组1
+        //arguments.push(123); //arguments.push is not a function //没有push方法
+        //检验是否是数组2
+        console.log(arguments instanceof Array);//false
+        //结论：arguments不是数组
+
+        //将arguments转换为数组 第一种写法
+        var arguments2 = [].slice.call(arguments,0);//相当于arguments.slice(0)
+        console.log(arguments2);//此时arguments是一个数组 [1, 2]
+        arguments2.push(123);
+        console.log(arguments2); //[1,2,3]
+        console.log(arguments2 instanceof Array);//true
+       //第二种写法，从数组的原型对象中获取slice方法
+        var arguments3=Array.prototype.slice.call(arguments,0);
+        arguments3.push(123);
+        console.log("arguments3"+arguments3);
+        console.log(arguments3 instanceof Array); //true
+    }
+    sum(1,2);
+
+
+    //二、传递参数
+    //下面是将参数从一个函数传递到另一个函数的推荐做法。
+    function foo() {
+        bar.apply(null, arguments);
+    }
+    function bar(a, b, c) {
+        // 干活
+        console.log('bar'+a+b+c);
+    }
+</script>
+</body>
+</html>

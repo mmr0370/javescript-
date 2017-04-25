@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闭包和引用</title>
+</head>
+<body>
+<script>
+    //包是 JavaScript 一个非常重要的特性，这意味着当前作用域总是能够访问外部作用域中的变量。
+    //因为 函数 是 JavaScript 中唯一拥有自身作用域的结构，因此闭包的创建依赖于函数。
+    //1.模拟私有变量
+    function Counter(start){
+        var count=start;
+        return{
+            increment:function(){
+                count++;
+            },
+            get:function(){
+                return count++;
+            }
+
+        }
+    }
+    var foo=Counter(4);
+    foo.increment();
+    console.log(foo.get());
+
+    //为什么不可以在外部访问私有变量?
+    //因为 JavaScript 中不可以对作用域进行引用或赋值，因此没有办法在外部访问 count 变量。 唯一的途径就是通过那两个闭包。
+    var foo = new Counter(4);
+    foo.hack = function() {
+        count = 1337;
+    }
+    foo.hack();
+    console.log("全局变量"+count); //1337
+
+    //上面的代码不会改变定义在 Counter 作用域中的 count 变量的值，因为 foo.hack 没有 定义在那个作用域内。它将会创建或者覆盖全局变量 count。
+
+    //2 循环中的闭包
+    for(var i = 0; i < 10; i++) {
+        setTimeout(function() {
+            console.log(i);
+        }, 1000);
+    }
+    for (var i=0;i<10;i++){
+        (function(e){
+            setTimeout(function () {
+                console.log(e);
+            },1000);
+        })(i);
+    }
+
+    for (var i=0;i<10;i++){
+        setTimeout((function(e){
+            return function (){
+                console.log(e);
+            };
+        })(i),1000)
+    }
+</script>
+</body>
+</html>

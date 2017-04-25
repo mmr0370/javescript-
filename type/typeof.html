@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>typeof 操作符</title>
+</head>
+<body>
+<script>
+    //typeof 操作符（和 instanceof 一起）或许是 JavaScript 中最大的设计缺陷， 因为几乎不可能从它们那里得到想要的结果。
+    //尽管 instanceof 还有一些极少数的应用场景，
+    // typeof 只有一个实际的应用（译者注：这个实际应用是用来检测一个对象是否已经定义或者是否已经赋值）， 而这个应用却不是用来检查对象的类型。
+    //注意: 由于 typeof 也可以像函数的语法被调用，比如 typeof(obj)，但这并不是一个函数调用。
+    // 那两个小括号只是用来计算一个表达式的值，这个返回值会作为 typeof 操作符的一个操作数。 实际上不存在名为 typeof 的函数。
+
+   // JavaScript 类型表格
+  /*
+  *   Value             Class      Type
+   -------------------------------------
+   "foo"               String     string
+   new String("foo")   String     object
+   1.2                 Number     number
+   new Number(1.2)     Number     object
+   true                Boolean    boolean
+   new Boolean(true)   Boolean    object
+   new Date()          Date       object
+   new Error()         Error      object
+   [1,2,3]             Array      object
+   new Array(1, 2, 3)  Array      object
+   new Function("")    Function   function
+   /abc/g              RegExp     object (function in Nitro/V8)
+   new RegExp("meow")  RegExp     object (function in Nitro/V8)
+   {}                  Object     object
+   new Object()        Object     object
+  * */
+
+  //面表格中，Type 一列表示 typeof 操作符的运算结果。可以看到，这个值在大多数情况下都返回 "object"。
+    // Class 一列表示对象的内部属性 [[Class]] 的值。
+
+    //为了获取对象的 [[Class]]，我们需要使用定义在 Object.prototype 上的方法 toString。
+    //avaScript 标准文档中定义:[[Class]] 的值只可能是下面字符串中的一个：
+    // Arguments, Array, Boolean, Date, Error, Function, JSON, Math, Number, Object, RegExp, String.
+
+    //为了获取对象的 [[Class]]，我们需要使用定义在 Object.prototype 上的方法 toString。
+
+    //对象的类定义
+    //JavaScript 标准文档只给出了一种获取 [[Class]] 值的方法，那就是使用 Object.prototype.toString。
+</script>
+</body>
+</html>
